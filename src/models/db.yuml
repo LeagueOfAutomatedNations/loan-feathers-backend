@@ -1,0 +1,17 @@
+// {type:class}
+// {direction:leftToRight}
+// {generate:true}
+[note: a yuml diagram of the loan database! VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=JaimeOlivares.yuml{bg:cornsilk}]
+[alliances|shortname;fullname;color;logo;charter]
+[rooms|name;import;level;owner;shard]
+[users|id;ign;login_code;login_code_created_at;screeps_id;alliance;gcl;power]
+[alliances]<>1-0..*>[users]
+[users]<>1-0..*>[rooms]
+[room_imports|id;started_at;status]
+[rankings_imports|id;started_at;status]
+[rankings|alliance;import;alliance_gcl;combined_gcl;rcl;spawns;members;alliance_power;combined_power]
+[alliance_invites|id;alliance;sent_at;user_id;sender]
+[alliance_invites]<>1->[users]
+[alliance_invites]<>1->[users]
+[alliance_invites]<>0..1-1>[alliances]
+
