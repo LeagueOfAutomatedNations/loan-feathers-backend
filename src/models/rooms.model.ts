@@ -6,51 +6,37 @@ import { HookReturn } from 'sequelize/types/lib/hooks';
 
 export default function (app: Application): typeof Model {
   const sequelizeClient: Sequelize = app.get('sequelizeClient');
-  const users = sequelizeClient.define('users', {
+  const rooms = sequelizeClient.define('rooms', {
   
-    email: {
+    shard: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: 'compositeIndex'
     },
-    password: {
+    name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: 'compositeIndex'
     },
-    ingame_name: {
+    import: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: 'compositeIndex'
     },
-    login_code: {
+    level: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    login_code_created_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    screeps_id: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    alliance: {
+    owner: {
       type: DataTypes.STRING,
       allowNull: true,
+      // this fails to parse.
       references: {
-        model: 'alliances',
+        model: 'users',
         key: 'id'
       }
     },
-    gcl: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    power: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-  
-  
+    
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {
@@ -60,11 +46,10 @@ export default function (app: Application): typeof Model {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (users as any).associate = function (models: any): void {
+  (rooms as any).associate = function (models: any): void {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    // users.belongsToMany(roomsModel, { foreignKey: 'owner'}); // this fails
   };
 
-  return users;
+  return rooms;
 }

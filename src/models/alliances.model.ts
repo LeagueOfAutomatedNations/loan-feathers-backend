@@ -6,51 +6,29 @@ import { HookReturn } from 'sequelize/types/lib/hooks';
 
 export default function (app: Application): typeof Model {
   const sequelizeClient: Sequelize = app.get('sequelizeClient');
-  const users = sequelizeClient.define('users', {
+  const alliances = sequelizeClient.define('alliances', {
   
-    email: {
+    shortname: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
     },
-    password: {
+    fullname: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    ingame_name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    login_code: {
+    color: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    login_code_created_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    screeps_id: {
+    logo: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
-    alliance: {
+    charter: {
       type: DataTypes.STRING,
-      allowNull: true,
-      references: {
-        model: 'alliances',
-        key: 'id'
-      }
-    },
-    gcl: {
-      type: DataTypes.INTEGER,
       allowNull: true
     },
-    power: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-  
-  
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {
@@ -60,11 +38,10 @@ export default function (app: Application): typeof Model {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (users as any).associate = function (models: any): void {
+  (alliances as any).associate = function (models: any): void {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    // users.belongsToMany(roomsModel, { foreignKey: 'owner'}); // this fails
   };
 
-  return users;
+  return alliances;
 }

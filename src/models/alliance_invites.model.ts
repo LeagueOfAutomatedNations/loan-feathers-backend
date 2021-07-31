@@ -6,51 +6,36 @@ import { HookReturn } from 'sequelize/types/lib/hooks';
 
 export default function (app: Application): typeof Model {
   const sequelizeClient: Sequelize = app.get('sequelizeClient');
-  const users = sequelizeClient.define('users', {
+  const alliance_invites = sequelizeClient.define('alliance_invites', {
   
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    ingame_name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    login_code: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    login_code_created_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    screeps_id: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     alliance: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: 'alliances',
         key: 'id'
       }
     },
-    gcl: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+    sent_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
     },
-    power: {
+    user_id: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
-  
-  
+    sender: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    },
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {
@@ -60,11 +45,10 @@ export default function (app: Application): typeof Model {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (users as any).associate = function (models: any): void {
+  (alliance_invites as any).associate = function (models: any): void {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    // users.belongsToMany(roomsModel, { foreignKey: 'owner'}); // this fails
   };
 
-  return users;
+  return alliance_invites;
 }
