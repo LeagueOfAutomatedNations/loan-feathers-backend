@@ -28,5 +28,8 @@
       "passwordField": "password"
     }
   },
-  "sqlite": "sqlite://loan_feathers_backend.sqlite"
+  "database": {
+    "uri": "sqlite://loan_feathers_backend.sqlite",
+    "options": {}
+  }
 }
