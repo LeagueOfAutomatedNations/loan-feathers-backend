@@ -8,14 +8,15 @@ import hooks from './rooms.hooks';
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    'rooms': Rooms & ServiceAddons<any>;
+    rooms: Rooms & ServiceAddons<any>;
   }
 }
 
 export default function (app: Application): void {
   const options = {
     Model: createModel(app),
-    paginate: app.get('paginate')
+    paginate: app.get('paginate'),
+    multi: ['create'] // https://stackoverflow.com/questions/54007789/why-after-upgrade-feathersjs-i-receive-error-methodnotallowed
   };
 
   // Initialize our service with any options it requires

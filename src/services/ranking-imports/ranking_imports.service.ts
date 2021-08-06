@@ -1,29 +1,28 @@
-// Initializes the `users` service on path `/users`
+// Initializes the `ranking_imports` service on path `/ranking-imports`
 import { ServiceAddons } from '@feathersjs/feathers';
 import { Application } from '../../declarations';
-import { Users } from './users.class';
-import createModel from '../../models/users.model';
-import hooks from './users.hooks';
+import { RankingImports } from './ranking_imports.class';
+import createModel from '../../models/ranking_imports.model';
+import hooks from './ranking_imports.hooks';
 
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    users: Users & ServiceAddons<any>;
+    'ranking-imports': RankingImports & ServiceAddons<any>;
   }
 }
 
 export default function (app: Application): void {
   const options = {
     Model: createModel(app),
-    // paginate: app.get('paginate'),
-    multi: ['create'] // https://stackoverflow.com/questions/54007789/why-after-upgrade-feathersjs-i-receive-error-methodnotallowed
+    paginate: app.get('paginate')
   };
 
   // Initialize our service with any options it requires
-  app.use('/users', new Users(options, app));
+  app.use('/ranking-imports', new RankingImports(options, app));
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('users');
+  const service = app.service('ranking-imports');
 
   service.hooks(hooks);
 }
