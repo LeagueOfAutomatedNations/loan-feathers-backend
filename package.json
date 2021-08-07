@@ -31,8 +31,9 @@
     "jest": "jest  --forceExit",
     "compile": "shx rm -rf lib/ && tsc",
     "import-users": "ts-node ./src/cli/import-users.ts",
+    "import-users-rankings": "ts-node ./src/cli/import-users-rankings.ts",
     "import-rooms": "ts-node ./src/cli/import-rooms.ts",
-    "import-all": "yarn import-users && yarn import-rooms"
+    "import-all": "yarn import-users && yarn import-rooms && yarn import-users-rankings"
   },
   "standard": {
     "env": [
